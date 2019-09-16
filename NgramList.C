@@ -43,6 +43,7 @@ NgramList::~NgramList()
    while (first != NULL)
    {
       nextNgram = first->next;
+      //delete first changed from free(first):: Mismatched free, delete, delete[]
       delete first;
       first = nextNgram;
    }
