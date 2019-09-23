@@ -117,6 +117,12 @@ void NgramList::insertNgram(std::string s)
    newNode->ngram = s;
    newNode->count = 1;
 
+   //insert in front of list
+   if (ptr == NULL) {
+        newNode->next = first;
+        first = newNode;
+   }
+
    while (ptr != NULL)
    {
       //s already in list
@@ -127,9 +133,7 @@ void NgramList::insertNgram(std::string s)
       }
       ptr = ptr->next;
    }
-   //insert in front of list
-   newNode->next = first;
-   first = newNode;
+   
 }
 
 
