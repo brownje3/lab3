@@ -112,16 +112,7 @@ std::string NgramList::getNextNgram(WordList::const_iterator start,
  */
 void NgramList::insertNgram(std::string s)
 {
-   Ngram_t * ptr = first;
-   Ngram_t * newNode = new Ngram_t();
-   newNode->ngram = s;
-   newNode->count = 1;
-
-   //insert in front of list
-   if (ptr == NULL) {
-        newNode->next = first;
-        first = newNode;
-   }
+   Ngram_t * ptr = first; 
 
    while (ptr != NULL)
    {
@@ -133,7 +124,14 @@ void NgramList::insertNgram(std::string s)
       }
       ptr = ptr->next;
    }
-   
+   //moved this code chunk under the while loop.
+   //It doesnt need to be created if the return will be taken
+   Ngram_t * newNode = new Ngram_t();
+   newNode->ngram = s;
+   newNode->count = 1;
+   //insert in front of list
+   newNode->next = first;
+   first = newNode;
 }
 
 
