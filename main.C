@@ -14,7 +14,7 @@
 #include <cstring>
 #include "WordList.h"
 #include "NgramList.h"
-
+#include "MyNgramList.h"
 using namespace std;
 
 /*
@@ -60,7 +60,7 @@ int main(int argc, char * argv[])
       wl.addWord(word);
    }
 
-   NgramList nglst(ngrams, wl);
+   MyNgramList nglst(ngrams, wl);
    nglst.sortByCount();
    cout << nglst;
 }
