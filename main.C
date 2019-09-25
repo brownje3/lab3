@@ -62,7 +62,7 @@ int main(int argc, char * argv[])
 
    NgramList nglst(ngrams, wl);
 
-   nglst.sortByCount();
+  // nglst.sortByCount();
 
    cout << nglst;
 }

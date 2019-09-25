@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <functional>
+#include <set>
+#include <algorithm>
 #include "WordList.h"
 #include "NgramList.h"
 
@@ -184,7 +187,8 @@ void NgramList::sortByCount()
    }*/
    
    //place the ngrams in a map and sort by descending value
-    
+   //typedef std::function<bool(std::map<std::string, int>, std::map<std::string, int>)> Comparator;
+
 }
 
 
@@ -203,11 +207,29 @@ std::ostream& operator<<(std::ostream& os, const NgramList & nglst)
    cout << "List of " << nglst.ngramSz << " word ngrams and counts\n";
    cout << "--------------------------------\n";
 
-   auto end = nglst.ngramMap.end();
+   //auto end = nglst.ngramMap.end();
+   
 
-   for(auto iter = nglst.ngramMap.begin(); iter != end; iter++)
+   typedef std::function<bool(std::pair<std::string, int>,
+        std::pair<std::string, int>)> Comparator;
+
+   Comparator cmp = 
+   [](std::pair<std::string, int> e1, std::pair<std::string, int> e2)
+   {
+        return e1.second > e2.second;
+   };
+
+   std::multiset<std::pair<std::string, int>, Comparator> ngramSet(nglst.ngramMap.begin(),
+        nglst.ngramMap.end(), cmp);
+
+   /**for(auto iter = nglst.ngramMap.begin(); iter != end; iter++)
    {
       cout << iter->first << ", " << iter->second << endl;
+   }*/
+
+   for (std::pair<std::string, int> num : ngramSet)
+   {
+        cout << num.first << ", " << num.second << endl;
    }
     
    return os;

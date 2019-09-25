@@ -10,6 +10,7 @@ class NgramList
    };
 
    typedef struct Ngram Ngram_t;
+ 
 
    private:
       std::map<std::string, int> ngramMap;
