@@ -62,8 +62,6 @@ int main(int argc, char * argv[])
 
    NgramList nglst(ngrams, wl);
 
-  // nglst.sortByCount();
-
    cout << nglst;
 }
 

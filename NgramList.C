@@ -106,7 +106,7 @@ std::string NgramList::getNextNgram(WordList::const_iterator start,
 /*
  * insertNgram
  *
- * looks for the ngram to be inserted. If it is already in
+ * Looks for the ngram to be inserted. If it is already in
  * the map then the count is incremented
  *
  * param: std::string s - ngram to be inserted
@@ -146,57 +146,11 @@ void NgramList::insertNgram(std::string s)
 
 }
 
-
-/*
- * sortByCount
- *
- * performs a bucket sort on the linked list of ngrams, sorting the
- * nodes in the list by the count
- *
- * param: none
- * return: none (modfied private linked list)
- */
-void NgramList::sortByCount()
-{
-   
-   /*Ngram_t * ptr = first;
-   Ngram_t * ptr1;
-   Ngram_t * ptr2;
-   int tcount;
-   string tngram;
-
-   while (ptr != NULL)
-   {
-      ptr1 = first; 
-      ptr2 = ptr1->next;
-      while (ptr2 != NULL) 
-      {
-         if (ptr2->count > ptr1->count)
-         {
-            tcount = ptr1->count;
-            tngram = ptr1->ngram;
-            ptr1->count = ptr2->count;
-            ptr1->ngram = ptr2->ngram; 
-            ptr2->count = tcount;
-            ptr2->ngram = tngram;
-         }
-         ptr1 = ptr2; 
-         ptr2 = ptr2->next;
-      }
-      ptr = ptr->next;
-   }*/
-   
-   //place the ngrams in a map and sort by descending value
-   //typedef std::function<bool(std::map<std::string, int>, std::map<std::string, int>)> Comparator;
-
-}
-
-
-
 /*
  * operator<<
  *
- * prints the list of ngrams
+ * sorts then prints the list of ngrams
+ * after loading the map into a multiset
  *
  * param: std::ostream & os - output stream to direct the output to
  * param: const NgramList & nglst - ngram list object
@@ -206,8 +160,6 @@ std::ostream& operator<<(std::ostream& os, const NgramList & nglst)
 {
    cout << "List of " << nglst.ngramSz << " word ngrams and counts\n";
    cout << "--------------------------------\n";
-
-   //auto end = nglst.ngramMap.end();
    
 
    typedef std::function<bool(std::pair<std::string, int>,
@@ -221,11 +173,6 @@ std::ostream& operator<<(std::ostream& os, const NgramList & nglst)
 
    std::multiset<std::pair<std::string, int>, Comparator> ngramSet(nglst.ngramMap.begin(),
         nglst.ngramMap.end(), cmp);
-
-   /**for(auto iter = nglst.ngramMap.begin(); iter != end; iter++)
-   {
-      cout << iter->first << ", " << iter->second << endl;
-   }*/
 
    for (std::pair<std::string, int> num : ngramSet)
    {
