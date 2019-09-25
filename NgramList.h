@@ -1,3 +1,4 @@
+#include <map>
 
 class NgramList 
 {
@@ -9,9 +10,10 @@ class NgramList
    };
 
    typedef struct Ngram Ngram_t;
+ 
 
    private:
-      Ngram_t * first;
+      std::map<std::string, int> ngramMap;
       int ngramSz;
       void insertNgram(std::string s);
       std::string getNextNgram(WordList::const_iterator start, 
@@ -20,7 +22,6 @@ class NgramList
    public:
       NgramList(int ngramSz, const WordList & wl);
       ~NgramList();
-      void sortByCount();
       friend std::ostream& operator<<(std::ostream& os, const NgramList & nl);
 };
 

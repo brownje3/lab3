@@ -2,13 +2,13 @@ CC = g++
 CFLAGS = -g -pg -c -std=c++0x
 OBJS = NgramList.o WordList.o main.o
 LFLAGS = -pg
-MFLAGS = -g -pg 
+MFLAGS = -g -pg
 
 .C.o:
 	$(CC) $(CFLAGS) $< -o $@
 
 ngram: NgramList.o WordList.o main.o
-	$(CC) $(LFLAGS) $(OBJS) -o ngram
+	$(CC) $(MFLAGS) $(OBJS) -o ngram
 
 my-ngram: NgramList.o WordList.o main.o
 	$(CC) $(MFLAGS) $(OBJS) -o my-ngram
