@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 #include "WordList.h"
 #include "NgramList.h"
 
@@ -11,7 +12,7 @@ using namespace std;
  * NgramList
  *
  * takes as input the size of the ngrams to be built and the list  
- * of words to build the ngrams from and builds a linked list of 
+ * of words to build the ngrams from and builds a map of 
  * ngrams.
  *
  * param: int ngramSz - size of the ngram
@@ -21,7 +22,6 @@ NgramList::NgramList(int ngramSz, const WordList & wl)
 {
    this->ngramSz = ngramSz;
    WordList::const_iterator p;
-   first = NULL;
    p = wl.begin();
    while (p != wl.end())
    {
@@ -36,17 +36,17 @@ NgramList::NgramList(int ngramSz, const WordList & wl)
  *
  * automatically called when NgramList object goes out of scope
  * deletes the linked list
- */
+ **/
 NgramList::~NgramList()
 {
-   Ngram_t * nextNgram;
+  /**Ngram_t * nextNgram;
    while (first != NULL)
    {
       nextNgram = first->next;
       //delete first changed from free(first):: Mismatched free, delete, delete[]
       delete first;
       first = nextNgram;
-   }
+   }**/
 }
 
 /*
@@ -104,15 +104,14 @@ std::string NgramList::getNextNgram(WordList::const_iterator start,
  * insertNgram
  *
  * looks for the ngram to be inserted. If it is already in
- * the linked list,  it increments the count. If not, it 
- * inserts it into the linked list.
+ * the map then the count is incremented
  *
  * param: std::string s - ngram to be inserted
  * return: none
  */
 void NgramList::insertNgram(std::string s)
 {
-   Ngram_t * ptr = first; 
+   /**Ngram_t * ptr = first; 
 
    while (ptr != NULL)
    {
@@ -131,14 +130,24 @@ void NgramList::insertNgram(std::string s)
    newNode->count = 1;
    //insert in front of list
    newNode->next = first;
-   first = newNode;
+   first = newNode;*/
+
+   if (ngramMap.find(s) != ngramMap.end())
+   {
+        ngramMap.at(s)++;
+   }
+   else
+   {
+        ngramMap[s] = 1;
+   }
+
 }
 
 
 /*
  * sortByCount
  *
- * performs a bubble sort on the linked list of ngrams, sorting the
+ * performs a bucket sort on the linked list of ngrams, sorting the
  * nodes in the list by the count
  *
  * param: none
@@ -146,7 +155,8 @@ void NgramList::insertNgram(std::string s)
  */
 void NgramList::sortByCount()
 {
-   Ngram_t * ptr = first;
+   
+   /*Ngram_t * ptr = first;
    Ngram_t * ptr1;
    Ngram_t * ptr2;
    int tcount;
@@ -171,8 +181,13 @@ void NgramList::sortByCount()
          ptr2 = ptr2->next;
       }
       ptr = ptr->next;
-   }
+   }*/
+   
+   //place the ngrams in a map and sort by descending value
+    
 }
+
+
 
 /*
  * operator<<
@@ -187,11 +202,13 @@ std::ostream& operator<<(std::ostream& os, const NgramList & nglst)
 {
    cout << "List of " << nglst.ngramSz << " word ngrams and counts\n";
    cout << "--------------------------------\n";
-   NgramList::Ngram_t * ptr = nglst.first;
-   while (ptr != NULL)
+
+   auto end = nglst.ngramMap.end();
+
+   for(auto iter = nglst.ngramMap.begin(); iter != end; iter++)
    {
-      cout << ptr->ngram << ", " << ptr->count << endl;
-      ptr = ptr->next;
-   } 
+      cout << iter->first << ", " << iter->second << endl;
+   }
+    
    return os;
 }
