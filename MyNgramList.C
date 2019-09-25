@@ -116,24 +116,40 @@ void MyNgramList::insertNgram(std::string s)
    //does not need to be created each time there's an insertion place this later in the method
    //Ngram_t * newNode = new Ngram_t();
    //newNode->ngram = s;
-   //newNode->count = 1;
-
-   while (ptr != NULL)
+   //newNode->count = 
+   
+   
+   if(ptr == NULL || ptr->ngram >= s)
    {
-      //s already in list
-      if (ptr->ngram == s) 
-      {
-         ptr->count++;
-         return;
-      }
-      ptr = ptr->next;
+        if(ptr != NULL && ptr->ngram == s)
+        {
+            ptr->count++;
+            return;
+        }
+          newNode = new Ngram_t();
+          newNode->ngram = s;
+          newNode->count = 1;
+          newNode->next = first;
+          first = newNode;
+          
    }
-   //insert in front of list
-   newNode = new Ngram_t();
-   newNode->ngram = s;
-   newNode->count = 1;
-   newNode->next = first;
-   first = newNode;
+   else
+   {
+        while(ptr->next != NULL && ptr->next->ngram <= s)
+        {
+            ptr = ptr->next;
+        }
+        if(ptr->ngram == s)
+        {
+            ptr->count++;
+            return;
+        }
+        newNode = new Ngram_t();
+        newNode->ngram = s;
+        newNode->count = 1;
+        newNode->next = ptr->next;
+        ptr->next = newNode;
+   }
 }
 
 
