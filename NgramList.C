@@ -40,17 +40,7 @@ NgramList::NgramList(int ngramSz, const WordList & wl)
  * automatically called when NgramList object goes out of scope
  * deletes the linked list
  **/
-NgramList::~NgramList()
-{
-  /**Ngram_t * nextNgram;
-   while (first != NULL)
-   {
-      nextNgram = first->next;
-      //delete first changed from free(first):: Mismatched free, delete, delete[]
-      delete first;
-      first = nextNgram;
-   }**/
-}
+NgramList::~NgramList(){}
 
 /*
  * getNextNgram
@@ -114,27 +104,6 @@ std::string NgramList::getNextNgram(WordList::const_iterator start,
  */
 void NgramList::insertNgram(std::string s)
 {
-   /**Ngram_t * ptr = first; 
-
-   while (ptr != NULL)
-   {
-      //s already in list
-      if (ptr->ngram == s) 
-      {
-         ptr->count++;
-         return;
-      }
-      ptr = ptr->next;
-   }
-   //moved this code chunk under the while loop.
-   //It doesnt need to be created if the return will be taken
-   Ngram_t * newNode = new Ngram_t();
-   newNode->ngram = s;
-   newNode->count = 1;
-   //insert in front of list
-   newNode->next = first;
-   first = newNode;*/
-
    if (ngramMap.find(s) != ngramMap.end())
    {
         ngramMap.at(s)++;
