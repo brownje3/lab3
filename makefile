@@ -18,7 +18,7 @@ main.o: WordList.h NgramList.h
 
 WordList.o: WordList.h
 
-NgramList.o: NgramList.h WordList.h
+NgramLis.o: NgramList.h WordList.h
 
 MyNgramList.o: MyNgramList.h WordList.h
 

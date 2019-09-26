@@ -1,4 +1,9 @@
 /*
+ * NOTICE:
+ * Uncomment/Comment the class needed.
+ *
+ *
+ *
  * Name: James Brown
  *
  * Name: Connor Hamilton
@@ -59,9 +64,9 @@ int main(int argc, char * argv[])
    {
       wl.addWord(word);
    }
-
-   NgramList nglst(ngrams, wl);
-
+  
+    //MyNgramList nglst(ngrams, wl);
+    NgramList nglst(ngrams, wl);
    cout << nglst;
 }
 
