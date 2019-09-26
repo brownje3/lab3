@@ -43,8 +43,6 @@ void sortByCount(){}
 /*
  * NgramList destructor
  *
- * automatically called when NgramList object goes out of scope
- * deletes the linked list
  **/
 NgramList::~NgramList(){}
 
