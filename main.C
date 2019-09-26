@@ -91,7 +91,8 @@ void usage(int argc, char * argv[], int & ngrams, string & filename)
    {
       ngrams = atoi(argv[2]); 
       filename = argv[3];
-   }
+   } 
+
    ifstream wordfile(filename);
    if (!wordfile.is_open()) 
    {
