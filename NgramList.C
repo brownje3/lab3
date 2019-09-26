@@ -35,6 +35,12 @@ NgramList::NgramList(int ngramSz, const WordList & wl)
 }
 
 /*
+ * Dummy method
+ * Here to uncomplicate main.C
+ *
+ **/
+void sortByCount(){}
+/*
  * NgramList destructor
  *
  * automatically called when NgramList object goes out of scope
