@@ -112,20 +112,22 @@ std::string MyNgramList::getNextNgram(WordList::const_iterator start,
  */
 void MyNgramList::insertNgram(std::string s)
 {
+    //reference pointer to the first element in the linked list
    Ngram_t * ptr = first;
    //does not need to be created each time there's an insertion place this later in the method
    //Ngram_t * newNode = new Ngram_t();
    //newNode->ngram = s;
-   //newNode->count = 
+   //newNode->count = 1;
    
-   
+   //Will either create a new node or increment count if there's already an existing ngram
    if(ptr == NULL || ptr->ngram >= s)
    {
-        if(ptr != NULL && ptr->ngram == s)
+        if(ptr != NULL && ptr->ngram == s)//increments count
         {
             ptr->count++;
             return;
         }
+          //creates newNode to add to the linked list
           newNode = new Ngram_t();
           newNode->ngram = s;
           newNode->count = 1;
@@ -135,15 +137,16 @@ void MyNgramList::insertNgram(std::string s)
    }
    else
    {
-        while(ptr->next != NULL && ptr->next->ngram <= s)
+        while(ptr->next != NULL && ptr->next->ngram <= s)//moves the pointer to the next element if no match is found
         {
             ptr = ptr->next;
         }
-        if(ptr->ngram == s)
+        if(ptr->ngram == s)//increments count to existing node
         {
             ptr->count++;
             return;
         }
+        //creates new node
         newNode = new Ngram_t();
         newNode->ngram = s;
         newNode->count = 1;
@@ -158,28 +161,32 @@ void MyNgramList::insertNgram(std::string s)
  *
  * Fixing sort by Count from using a bubble sort algorithm to a merge sort algorithm
  *
- * param: none
- * return: none (modfied private linked list)
+ * param: initial - the first linked list being merged
+ * param: second - the second linked list being merged
+ * return: second - last element(s) of the second array (base case)
+ * return: initial - last element(s) of the first array (base case)
+ * return: result - final result of the merged array
  */
 MyNgramList::Ngram_t* MyNgramList::merge(Ngram_t* initial, Ngram_t* second)
 {
+    //stores end result of the linked list
    Ngram_t * result;
-
+   //base case if the first parameter doesn't exist
    if(initial == NULL)
    {
         return second;
    }
-   else if(second == NULL)
+   else if(second == NULL)//base case if the second parameter doesn't exist
    {
         return initial;
    }
-
+   //compares counts of the two lists and sets the first parameter into result
    if(initial->count >= second->count)
    {
         result = initial;
         result->next = merge(initial->next, second);
    }
-   else
+   else//sets the second parameter into result
    {
         result = second;
         result->next = merge(initial, second->next);
@@ -191,6 +198,7 @@ MyNgramList::Ngram_t* MyNgramList::merge(Ngram_t* initial, Ngram_t* second)
 //takes in a Ngram_t reference to prepare the linked list for merge sort
 void MyNgramList::sortByCount()
 {
+    //
     Ngram_t** ptr = &first;
     //testing loop to see into first
     //Ngram_t* checker = first;
@@ -199,41 +207,59 @@ void MyNgramList::sortByCount()
     //    std::cout<< checker->ngram;
     //    checker = checker->next;
     //}
+
+    //sets up the start of the merge sort
     starter(ptr);
 }
-
-
+/*
+ *Starter is what puts the merge sort into motion
+ *param: reference- a double pointer to the list that needs to be sorted 
+ */
 void MyNgramList::starter(Ngram_t** reference)
 {
+    //creates a pointer to the list
     Ngram_t* ptr = *reference;
+    //will be 1/2 of the previous list
     Ngram_t* ptr1;
+    //will be other half of the list
     Ngram_t* ptr2;
-
+    
+    //base case to method, stops when the list is either empty or will be empty
     if((ptr == NULL) || (ptr->next == NULL))
     {
         return;
     }
-
+    //splits the list into smaller lists
     split(ptr, &ptr1, &ptr2);
 
+    //checks first part of the list
     starter(&ptr1);
+    //checks second part of the list
     starter(&ptr2);
 
+    //end result of the lists combined
     *reference = merge(ptr1, ptr2);
 }
 
-//splits the list into back half and front half for merge sort
+/*splits the list into back half and front half for merge sort
+ *
+ *param - source: the original list
+ *param front: what will be the front of the list
+ *param end: what will be the back end of the list
+ */
 void MyNgramList::split(Ngram_t* source, Ngram_t** front, Ngram_t** end)
 {
+    //this pointer will act as the faster pointer
     Ngram_t* last;
+    //this pointer will act as the slower pointer
     Ngram_t* first;
     first = source;
     last = source->next;
-
-    while (last != NULL)
+    
+    while (last != NULL)//sets the last pointer ahead of the first pointer
     {
         last = last->next;
-        if(last != NULL)
+        if(last != NULL)//differentiates between the two pointers
         {
             first = first->next;
             last = last->next;
