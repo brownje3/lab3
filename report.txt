@@ -1,0 +1,135 @@
+Ngram Optimization:
+Original Timing: Without any changes made to the program
+Function
+Time(sec)
+NgramList::sortByCount()
+10.09
+__gnu__cxx::__enable_if<std::__is_char<char>::__value, bool::__type std::operator==<char>(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+3.10
+NgramList::insertNgram(std::string)
+1.54
+std::char_traitsMchar>::compare(char const*, char const*, unsigned long)
+0.14
+std::string* std::__addressof<std::string>(std::string&)
+0.01
+_GLOBAL__sub_I__ZN(NgramListC2EiRk8WordList
+0.01
+NgramList::getNextNgram(__gnu_cxx::__normal_iterator<std::string...
+0.01
+std::basic_string<char, std::char_traits<char>, std::allocator<
+0.01
+Total
+14.18
+
+Fixed Timing: Changed Insert
+
+Function
+Time(sec)
+NgramList::sortByCount()
+7.2
+__gnu__cxx::__enable_if<std::__is_char<char>::__value, bool::__type std::operator==<char>(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+3
+NgramList::insertNgram(std::string)
+1.75
+std::char_traitsMchar>::compare(char const*, char const*, unsigned long)
+.17
+std::string* std::__addressof<std::string>(std::string&)
+0.0
+_GLOBAL__sub_I__ZN(NgramListC2EiRk8WordList
+.02
+NgramList::getNextNgram(__gnu_cxx::__normal_iterator<std::string...
+.01
+operator<<(std::ostream&, NgramList const&)
+
+
+.01
+Total
+12.16
+
+Fixed Timing1: Used Map instead of node and sorted using a multiset/custom comparator
+
+Function
+Time(sec)
+NgramList::sortByCount()
+0
+__gnu__cxx::__enable_if<std::__is_char<char>::__value, bool::__type std::operator==<char>(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+0
+NgramList::insertNgram(std::string)
+0
+std::char_traitsMchar>::compare(char const*, char const*, unsigned long)
+0
+std::string* std::__addressof<std::string>(std::string&)
+0
+_GLOBAL__sub_I__ZN(NgramListC2EiRk8WordList
+0
+NgramList::getNextNgram(__gnu_cxx::__normal_iterator<std::string...
+0
+std::basic_string<char, std::char_traits<char>, std::allocator<
+0
+Total
+0.0
+
+
+
+
+My-Ngram Optimization:
+
+Original Timing: Without any changes made to the program
+Function
+Time(sec)
+NgramList::sortByCount()
+9.20
+__gnu__cxx::__enable_if<std::__is_char<char>::__value, bool::__type std::operator==<char>(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+3.08
+NgramList::insertNgram(std::string)
+1.69
+std::char_traitsMchar>::compare(char const*, char const*, unsigned long)
+0.19
+WordList::addWord(std::string)
+0.01
+_GLOBAL__sub_I__ZN(NgramListC2EiRk8WordList
+0.01
+Total
+14.18
+
+
+Fixed Timing: Changed Sorting function from Bubble to Merged, sortByCount was reduced to many separate sub methods which explains why the time is so low (methods include: split, merge, and starter)
+
+Function
+Time(sec)
+__gnu__cxx::__enable_if<std::__is_char<char>::__value, bool::__type std::operator==<char>(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+2.66
+NgramList::insertNgram(std::string)
+1.38
+std::char_traitsMchar>::compare(char const*, char const*, unsigned long)
+0.12
+_GLOBAL__sub_I__ZN(NgramListC2EiRk8WordList
+0.04
+WordList::addWord(std::string)
+0.01
+MyNgramList::split(MyNgramList)
+0.01
+Total
+4.22
+
+Fixed Timing: Altered the insertNgram() function which brought the __gnu__cxx:: time down but raised it’s own time up slightly, resulting in an overall smaller time increment
+
+Function
+Time(sec)
+NgramList::insertNgram(std::string)
+2.02
+Bool std::operator<=<char, std::char_traits<char>
+1.21
+__gnu__cxx::__enable_if<std::__is_char<char>::__value, bool::__type std::operator==<char>(std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+0.09
+std::vector<std::string, std:: allocator
+0.02
+WordList::addWord(std::string)
+0.01
+MyNgramList::split
+0.01
+Total
+3.36
+
+
+
